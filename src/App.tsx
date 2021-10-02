@@ -17,6 +17,7 @@ const App = () => {
   const cardStyle = {
     maxWidth: 500,
     minHeight: 500,
+    overflowY: 'auto',
     display: "flex",
     flexDirection: 'column',
     justifyContent: "space-around",

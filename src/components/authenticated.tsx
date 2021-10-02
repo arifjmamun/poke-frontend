@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
-import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -9,20 +8,30 @@ import CardContent from "@mui/material/CardContent";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import SendIcon from '@mui/icons-material/Send';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 import LoginButton from "./login-button";
 import LogoutButton from "./logout-button";
-import { Pokemon } from "../interfaces/pokemon";
+import { Pokemon, Stat } from "../interfaces/pokemon";
+
+function getStatsText(stats: Stat[]) {
+  return stats?.map((stat) => stat.base_stat).join(", ");
+}
 
 const Authenticated = () => {
   const serverUrl = process.env.REACT_APP_SERVER_URL;
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
 
+  const [isLoading, setLoading] = useState(false);
   const [isRandom, setRandom] = useState(false);
   const [pokemon, setPokemon] = useState<Pokemon>({} as Pokemon);
 
   const getRandomPokemon = async () => {
-    setRandom(true);
+    setLoading(true);
 
     try {
       const token = await getAccessTokenSilently();
@@ -37,6 +46,9 @@ const Authenticated = () => {
     } catch (error) {
       setPokemon({} as Pokemon);
     }
+
+    setRandom(true);
+    setLoading(false);
   };
 
   return isAuthenticated ? (
@@ -49,31 +61,51 @@ const Authenticated = () => {
           />
           <CardContent>
             <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <Avatar
-                  sx={{ width: 150, height: 150 }}
-                  alt={pokemon.name}
-                  src={pokemon?.sprites?.front_default!}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <Avatar
-                  sx={{ width: 150, height: 150 }}
-                  alt={pokemon.name}
-                  src={pokemon?.sprites?.back_default!}
-                />
-              </Grid>
+              {pokemon?.sprites?.front_default && (
+                <Grid item xs={6}>
+                  <Avatar
+                    sx={{ width: 150, height: 150 }}
+                    alt={pokemon.name}
+                    src={pokemon?.sprites?.front_default}
+                  />
+                </Grid>
+              )}
+              {pokemon?.sprites?.back_default && (
+                <Grid item xs={6}>
+                  <Avatar
+                    sx={{ width: 150, height: 150 }}
+                    alt={pokemon.name}
+                    src={pokemon?.sprites?.back_default}
+                  />
+                </Grid>
+              )}
             </Grid>
-            <Typography align="center" variant="body2" color="text.secondary">Front and Back Image</Typography>
+            <Typography align="center" variant="body2" color="text.secondary">
+              Front and Back Image
+            </Typography>
+            <List dense={true}>
+              <ListItem>
+                <ListItemText
+                  key="stats"
+                  primary={`Stats: ${getStatsText(pokemon?.stats)}`}
+                />
+              </ListItem>
+            </List>
           </CardContent>
         </Card>
       )}
       {isRandom && (!pokemon || !Object.keys(pokemon).length) && (
         <Alert severity="error">Pokemon is not found!</Alert>
       )}
-      <Button variant="contained" onClick={getRandomPokemon}>
+      <LoadingButton
+        onClick={getRandomPokemon}
+        endIcon={<SendIcon />}
+        loading={isLoading}
+        loadingPosition="end"
+        variant="contained"
+      >
         Fetch random Pokemon
-      </Button>
+      </LoadingButton>
       <LogoutButton />
     </React.Fragment>
   ) : (
