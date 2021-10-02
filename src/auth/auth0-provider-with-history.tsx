@@ -9,6 +9,7 @@ type AppState = {
 const Auth0ProviderWithHistory = ({ children }: any) => {
   const domain = process.env.REACT_APP_AUTH0_DOMAIN as string;
   const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID as string;
+  const audience = process.env.REACT_APP_AUTH0_AUDIENCE as string;
 
   const history = useHistory();
 
@@ -22,6 +23,7 @@ const Auth0ProviderWithHistory = ({ children }: any) => {
       clientId={clientId}
       redirectUri={window.location.origin}
       onRedirectCallback={onRedirectCallback}
+      audience={audience}
     >
       {children}
     </Auth0Provider>

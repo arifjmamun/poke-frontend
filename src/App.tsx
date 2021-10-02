@@ -18,7 +18,8 @@ const App = () => {
     maxWidth: 500,
     minHeight: 500,
     display: "flex",
-    justifyContent: "center",
+    flexDirection: 'column',
+    justifyContent: "space-around",
     alignItems: "center",
     position: "relative",
   } as SxProps;
