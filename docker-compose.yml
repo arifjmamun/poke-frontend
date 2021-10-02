@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+  app:
+    container_name: poke-frontend
+    image: poke-frontend
+    build:
+      context: .
+      target: development
+    volumes:
+      - ./src:/app/src
+    ports:
+      - 4040:4040
