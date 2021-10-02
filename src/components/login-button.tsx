@@ -1,15 +1,21 @@
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
+import Button from "@mui/material/Button";
+import Login from "@mui/icons-material/Login";
+
 const LoginButton = () => {
   const { loginWithRedirect } = useAuth0();
+
   return (
-    <button
-      className="btn btn-primary btn-block"
+    <Button
+      variant="contained"
+      color="success"
+      endIcon={<Login />}
       onClick={() => loginWithRedirect()}
     >
-      Log In
-    </button>
+      Login
+    </Button>
   );
 };
 

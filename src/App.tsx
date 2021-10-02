@@ -1,32 +1,37 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
-import NavBar from './components/nav-bar';
-import Loading from './components/loading';
+import CssBaseline from "@mui/material/CssBaseline";
+import { SxProps } from "@mui/system";
+import Card from "@mui/material/Card";
+import Container from "@mui/material/Container";
 
-import Profile from './views/profile';
-import Home from './views/home';
+import Loading from "./components/loading";
+import Authenticated from "./components/authenticated";
 
 import "./App.css";
 
 const App = () => {
   const { isLoading } = useAuth0();
 
-  if (isLoading) {
-    return <Loading />;
-  }
+  const cardStyle = {
+    maxWidth: 500,
+    minHeight: 500,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+  } as SxProps;
 
   return (
-    <div id="app" className="d-flex flex-column h-100">
-      <NavBar />
-      <div className="container flex-grow-1">
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/profile" component={Profile} />
-        </Switch>
-      </div>
-    </div>
+    <React.Fragment>
+      <CssBaseline />
+      <Container maxWidth="sm">
+        <Card sx={cardStyle}>
+          {isLoading ? <Loading /> : <Authenticated />}
+        </Card>
+      </Container>
+    </React.Fragment>
   );
 };
 

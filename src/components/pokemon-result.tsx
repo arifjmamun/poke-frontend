@@ -4,7 +4,7 @@ import Fab from "@mui/material/Fab";
 import Logout from "@mui/icons-material/Logout";
 import { SxProps } from "@mui/system";
 
-const LogoutButton = () => {
+const PokemonResult = () => {
   const { logout } = useAuth0();
 
   const fabStyle = {
@@ -26,4 +26,4 @@ const LogoutButton = () => {
   );
 };
 
-export default LogoutButton;
+export default PokemonResult;
