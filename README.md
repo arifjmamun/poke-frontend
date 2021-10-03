@@ -26,3 +26,4 @@ The backend API utilizes the followings:
 - For authorization and authentication used Auth0
 - Used [create-react-app](https://create-react-app.dev/docs/making-a-progressive-web-app/) package to scaffold the basic version of this project
 - Used [Material UI](https://mui.com/) library to use prebuilt beautifully crafted components
+- To implement CI/CD used Netlify
