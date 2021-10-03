@@ -19,7 +19,7 @@ yarn start
 
 ## Getting started
 
-To explore the APP, navigate to the following URL: [Frontend APP](http://localhost:4040)
+To explore the APP, navigate to the following URL: [Frontend APP](http://localhost:4040) and it is deployed to [Netlify](https://poke-frontend-app.netlify.app/)
 
 ## Tools and stack
 The backend API utilizes the followings:
